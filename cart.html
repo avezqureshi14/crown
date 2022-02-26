@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Cart</title>
+    <style>
+        .box-element {
+            box-shadow: hsl(54, 100%, 82%) 0 0 9px;
+            background: linear-gradient(-191deg,#333 35%,#222 63%);
+            border-radius: 4px;
+            padding: 10px;
+            color: #fff;
+        }
+        
+        .box-element:hover{
+            background: linear-gradient(-364deg,#333 35%,#222 63%);
+        }
+    
+        .cart-row {
+            display: flex;
+            align-items: flex-stretch;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ece;
+        }
+    
+        .row-image {
+            width: 100px;
+        }
+    
+        .quantity {
+            display: inline-block;
+            font-weight: 700;
+            padding-right: 10px;
+        }
+    
+        .chg-quantity {
+            width: 12px;
+            cursor: pointer;
+            display: block;
+        }
+
+        body{
+            background: linear-gradient(93deg,#333 35%,#222 63%);
+        }
+        strong{
+            color: #fff;
+        }
+        h5{
+            color: #fff;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="container my-5 ">
+        <div class="row ">
+            <div class="col-lg-12">
+                <div class="box-element">
+                    <a href="products.html" class="btn btn-outline-warning">&#x2190; Continue Shopping</a>
+                </div>
+                <br>
+                <br>
+                <table class="table">
+                    <tr>
+                        <th>
+                            <h5>Item:</h5><strong>0</strong>
+                        </th>
+                        <th>
+                            <h5>Total:</h5><strong>0</strong>
+                        </th>
+                        <th>
+                            <a style="float: right;margin: 5px;" href="checkout.html"
+                                class="btn btn-warning">Checkout</a>
+                        </th>
+                    </tr>
+                </table>
+                <br>
+                <div class="box-element"> 
+                    <div class="cart-row">
+                        <div style="flex:2"></div>
+                        <div style="flex:2"><strong>Item</strong> </div>
+                        <div style="flex:1"><strong>Price</strong> </div>
+                        <div style="flex:1"><strong>Quantity</strong> </div>
+                        <div style="flex:1"> <strong>Total</strong> </div>
+                    </div>
+                    
+                    <div class="cart-row">
+                        
+                        <div style="flex:2"> <img class="row-image" src="{{item.product.image1.url}}" alt=""> </div>
+                        <div style="flex:2">
+                            <p></p>
+                        </div>
+                        <div style="flex:1">
+                            <p>$0</p>
+                        </div>
+                        <div style="flex:1">
+                            <p class="quantity">0</p>
+                            <div class="quantity">
+                                <img data-product={{item.product.id}} data-action="add" src="{%static 'images/arrUp.png'%}" alt="" class="chg-quantity update-cart">
+                                <img data-product={{item.product.id}}  src="{%static 'images/arrdwn.png'%}" alt="" data-action="remove" class="chg-quantity update-cart">
+                            </div>
+                        </div>
+                        <div style="flex:1">$0</div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="{% static 'cart.js' %}" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

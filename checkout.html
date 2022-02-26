@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title></title>
+    <style>
+        body{
+            background: linear-gradient(93deg,#333 35%,#222 63%);
+        }
+        .box-element {
+            box-shadow: hsl(54, 100%, 82%) 0 0 5px;
+            background: linear-gradient(-191deg,#333 35%,#222 63%);
+            border-radius: 4px;
+            padding: 10px;
+            color: #fff;
+        }
+
+           
+        .box-element:hover{
+            background: linear-gradient(-364deg,#333 35%,#222 63%);
+        }
+    
+        .form-field {
+            width: 250px;
+            display: inline-block;
+            padding: 5px;
+        }
+    
+        #form{
+            display:block;
+        }
+    
+        .hidden {
+            display: none;
+        }
+    
+        .cart-row {
+            display: flex;
+            align-items: flex-stretch;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ece;
+        }
+    
+        .row-image {
+            width: 100px;
+        }
+    
+        .quantity {
+            display: inline-block;
+            font-weight: 700;
+            padding-right: 10px;
+        }
+    
+        .chg-quantity {
+            width: 12px;
+            cursor: pointer;
+            display: block;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="container my-5  ">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="box-element" id="form-wrapper">
+                    <form action="" id="form">
+                        <div id="user-info">
+                            <div class="form-field">
+                                <input type="text" required class="form-control" name="name" placeholder="Name..">
+    
+                            </div>
+                            <div class="form-field">
+                                <input type="email" required class="form-control " name="email" placeholder="Email..">
+    
+                            </div>
+    
+                        </div>
+                        <div id="shipping-info">
+                            <hr>
+                            <p>Shipping Information</p>
+                            <hr>
+                            <div class="form-field">
+                                <input type="text" required class="form-control" name="address" placeholder="Address..">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" required class="form-control" name= "city" placeholder="City..">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" required class="form-control" name="state" placeholder="State..">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" required class="form-control" name="zipcode" placeholder="Zip code..">
+                            </div>
+    
+                        </div>
+    
+                        <hr>
+                        <input type="submit" id="form-button" class="btn btn-warning" value="Continue">
+                    </form>
+                </div>
+                <br>
+                <div class="box-element hidden" id="payment-info">
+                    <small>Paypal Options</small>
+                    <button id="make-payment" class="btn btn-block btn-warning"  >Make payment</button>
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="box-element">
+                    <a class="btn btn-outline-warning" href="cart.html">&#x2190; Back to Cart</a>
+                    <hr>
+                    <h3>Order Summary</h3>
+                    <hr>
+    
+                    {% for item in items %}
+                    <div class="cart-row">
+                        <div style="flex:2"> <img class="row-image" src="{{item.product.image.url}}" alt=""> </div>
+                        <div style="flex:2"><p>{{item.product.name}}</p></div>
+                        <div style="flex:1"><p>$ {{item.product.price|floatformat:2}}</p></div>
+                        <div style="flex:1"><p class="quantity"> {{item.quantity}}</p></div>
+                    </div>
+                    {% endfor %}
+                    <h5>Items: {{order.get_cart_items}}</h5>
+                    <h5>Total: ${{order.get_cart_total|floatformat:2}}</h5>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+        <script>
+            var shipping = '{{order.shipping}}'
+            var total = '{{order.get_cart_total}}'
+        
+            if (shipping == 'False'){
+                document.getElementById('shipping-info').innerHTML = ""
+            }
+    
+    
+             if (user != 'AnonymousUser'){
+                document.getElementById('user-info').innerHTML = ""
+            }
+    
+            if( shipping == 'False' && user != 'AnonymousUser'){
+                //Hide entire form if user is logged in and shipping is false
+                document.getElementById('form-wrapper').classList.add("hidden");
+                // Show payment if logged in user wants to buy an item that does not require shipping
+                document.getElementById('payment-info').classList.remove("hidden");
+            }
+    
+            var form = document.getElementById('form')
+            form.addEventListener('submit', function(e){
+                e.preventDefault()
+                console.log('Form Submitted...')
+                document.getElementById('form-button').classList.add("hidden");
+                document.getElementById('payment-info').classList.remove("hidden");
+            })
+            document.getElementById("make-payment").addEventListener("click", function(e){
+                submitFormData()
+            })
+            function submitFormData(){
+                console.log("Payment button clicked")
+    
+                var userFormData = {
+                    'name' :null,
+                    'email' :null,
+                    'total':total,
+                }
+                var shippinginfo = {
+                    'address' :null,
+                    'state' :null,
+                    'city' :null,
+                    'zipcode' :null,
+                }
+    
+                if(shipping != 'False'){
+                    shippinginfo.address = form.address.value
+                    shippinginfo.state = form.state.value
+                    shippinginfo.city = form.city.value
+                    shippinginfo.zipcode = form.zipcode.value
+                }
+                if(user == 'AnonymousUser'){
+                    userFormData.name = form.name.value
+                    userFormData .email = form.email.value
+                }
+    
+                var url = "/processOrder/"
+                fetch(url,{
+                    method:"POST",
+                    headers:{
+                        'Content-Type':'application/json',
+                        'X-CSRFToken':csrftoken,
+                    },
+                    body:JSON.stSinhgadify({'form':userFormData, 'shipping':shippinginfo})
+                })
+                .then((response)=> response.json())
+                .then((data)=>{
+        
+                    console.log('Success:',data);
+                    alert("Transaction completed");
+                    window.location.href = "{% url 'allproducts' %}"
+                })
+                
+            }
+           
+        </script>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="{% static 'cart.js' %}" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
