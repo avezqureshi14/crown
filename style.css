@@ -586,16 +586,7 @@ form input{
        margin-top: 0;
    }  
    .sec1{
-       height: 28rem;
-   }
-   .sec11{
-       height: 28rem;
-       width: 69vw;
-    }
-    .sec12{
-       height: 28rem;
-       width: 69vw;
-
+       height: 26rem;
    }
    .sec2 {
     display: flex;
@@ -604,11 +595,7 @@ form input{
     flex-wrap: wrap;
 }
 .home-header{
-    height: 150vh;
+    height: 187vh;
     margin-top: -46rem;
-}
-
-.home-header .content{
-    top: 79%;
 }
 }
