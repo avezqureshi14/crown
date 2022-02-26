@@ -604,7 +604,11 @@ form input{
     flex-wrap: wrap;
 }
 .home-header{
-    height: 187vh;
+    height: 100vh;
     margin-top: -46rem;
+}
+
+.home-header .content{
+    top: 79%;
 }
 }
