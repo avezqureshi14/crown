@@ -583,10 +583,11 @@ form input{
        justify-content: center;
        align-items: center;
        flex-wrap: wrap;
-       margin-top: 0;
+       margin-top: -14rem;
    }  
    .sec1{
-       height: 26rem;
+    height: 35rem;
+    width: 77vw;
    }
    .sec2 {
     display: flex;
@@ -597,5 +598,13 @@ form input{
 .home-header{
     height: 250vh;
     margin-top: -46rem;
+}
+.sec11{
+    height: 35rem;
+    width: 77vw;
+}
+.sec12{
+    height: 35rem;
+    width: 77vw;
 }
 }
